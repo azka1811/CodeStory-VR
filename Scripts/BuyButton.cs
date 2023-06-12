@@ -43,7 +43,7 @@ public class BuyButton : MonoBehaviour
         Debug.Log("Button Clicked" + value);
         if (value <= player.GetMoney() || value == 0)
         {
-            playerGun = playerGunParent.transform.GetChild(0).gameObject;
+            playerGun = GameObject.Find("PlayerGun");
             player.SetMoney(player.GetMoney() - value);
             value = 0;
             priceText.text = "Owned";

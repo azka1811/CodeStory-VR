@@ -27,11 +27,13 @@ public class DetectConnectionOperator : MonoBehaviour
 
     public string value = null;
     public AudioSource connectSound;
+    OculusControls controls;
 
     // Start is called before the first frame update
     void Start()
     {
-        connectSound.mute = true;
+        connectSound.mute = true; GameObject oculusControls = GameObject.Find("OculusControlManager");
+        controls = oculusControls.GetComponent<OculusControls>();
     }
 
     // Update is called once per frame
@@ -56,7 +58,8 @@ public class DetectConnectionOperator : MonoBehaviour
             {
                 if (hit.collider.CompareTag("PipeCon"))
                 {
-                    if (Input.GetKeyDown(KeyCode.E))
+                    //if (Input.GetKeyDown(KeyCode.E))
+                    if (controls.gripClick == 1)
                     {
                         parent = hit.collider.gameObject.transform.parent;
                         attached = hit.collider.gameObject;

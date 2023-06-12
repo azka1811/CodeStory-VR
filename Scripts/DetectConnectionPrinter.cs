@@ -34,13 +34,15 @@ public class DetectConnectionPrinter : MonoBehaviour
 
     public string value;
 
-    public string fullValue;
+    public string fullValue; OculusControls controls;
+
 
     // Start is called before the first frame update
     void Start()
     {
         connectSound.mute = true;
-        value = "";
+        value = ""; GameObject oculusControls = GameObject.Find("OculusControlManager");
+        controls = oculusControls.GetComponent<OculusControls>();
     }
 
     // Update is called once per frame
@@ -67,7 +69,8 @@ public class DetectConnectionPrinter : MonoBehaviour
                 if (hit.collider.CompareTag("PipeCon"))
                 {
                     //    Debug.Log("I SEE");
-                    if (Input.GetKeyDown(KeyCode.E))
+                    // if (Input.GetKeyDown(KeyCode.E))
+                    if (controls.gripClick == 1)
                     {
                         parent = hit.collider.gameObject.transform.parent;
                         attached = hit.collider.gameObject;

@@ -96,6 +96,7 @@ public class NarrativeSystem : MonoBehaviour
             imageCounter = 0;
             currentText = null;
             showingNarrative = false;
+           // playedNarrative = true;
             return;
         }
 

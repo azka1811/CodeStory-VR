@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DetectConnectionEnd : MonoBehaviour
+public class DetectConnectionLoop : MonoBehaviour
 {
     [SerializeField]
     float hitRange = 1.0f;
@@ -14,7 +14,7 @@ public class DetectConnectionEnd : MonoBehaviour
     float direction = 1.0f;
 
     [SerializeField]
-    string type = "in";
+    string io = "out";
 
     RaycastHit hit;
 
@@ -26,21 +26,22 @@ public class DetectConnectionEnd : MonoBehaviour
     Rigidbody attachedRB;
 
     public string value = null;
+
     public AudioSource connectSound;
+
+    public Loop loop;
     OculusControls controls;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject oculusControls = GameObject.Find("OculusControlManager");
+        connectSound.mute = true; GameObject oculusControls = GameObject.Find("OculusControlManager");
         controls = oculusControls.GetComponent<OculusControls>();
-        connectSound.mute = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-
         Debug
             .DrawRay(transform.position, (transform.right * direction) * hitRange, Color.red);
 
@@ -59,8 +60,7 @@ public class DetectConnectionEnd : MonoBehaviour
             {
                 if (hit.collider.CompareTag("PipeCon"))
                 {
-                    // if (Input.GetKeyDown(KeyCode.E))
-
+                    //if (Input.GetKeyDown(KeyCode.E))
                     if (controls.gripClick == 1)
                     {
                         parent = hit.collider.gameObject.transform.parent;
@@ -103,30 +103,23 @@ public class DetectConnectionEnd : MonoBehaviour
 
             // attached.transform.parent = parent;
 
-            /*if (type == "")
-           {
-                result = transform.parent.gameObject.GetComponent<Conditional>().result;
-              string res_text;
-                if (result == false)
-                {
-                    res_text = "false";
-                }
-                else
-                {
-                    res_text = "true";
-                }
+            if (io == "out")
+            {
+                value = loop.result;
+
                 attached
                .transform
                .parent?
                .gameObject
                .GetComponent<Connector>()?
-               .SetValue(res_text);
+               .SetValue(value);
+
 
             }
-            else*/
-            if (type == "in")
+            else if (io == "in")
             {
                 value = attached.transform.parent.gameObject.GetComponent<Connector>()?.GetValue();
+                loop.result = "L" + value;
             }
 
 

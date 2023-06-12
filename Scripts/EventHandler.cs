@@ -21,11 +21,14 @@ public class EventHandler : MonoBehaviour
     private float hitRange = 5;
 
     NarrativeSystem narrSys;
+    OculusControls controls;
+    float x = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        narrSys = GetComponent<NarrativeSystem>();
+        narrSys = GetComponent<NarrativeSystem>(); GameObject oculusControls = GameObject.Find("OculusControlManager");
+        controls = oculusControls.GetComponent<OculusControls>();
     }
 
     // Update is called once per frame
@@ -39,9 +42,15 @@ public class EventHandler : MonoBehaviour
         //Debug.Log("Running");
         if (narrSys.showingNarrative)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            // if (Input.GetKeyDown(KeyCode.Q))
+            if (controls.triggerClick == 1)
             {
-                narrSys.NextLine();
+                x += Time.deltaTime;
+                if (x >= 0.2)
+                {
+                    narrSys.NextLine();
+                    x = 0;
+                }
             }
         }
         else if (
@@ -58,14 +67,16 @@ public class EventHandler : MonoBehaviour
                 .gameObject
                 .GetComponent<Highlight>()?
                 .ToggleHighlight(true);
-            if (Input.GetKeyDown(KeyCode.Q))
+            // if (Input.GetKeyDown(KeyCode.Q))
+            if (controls.triggerClick == 1)
             {
                 Debug.Log("Clicked Q");
 
                 hit.transform.gameObject.GetComponent<QuestButtonStart>()?.Click();
+               // print(hit.transform.gameObject.GetComponent<QuestButtonStart>());
                 hit.transform.gameObject.GetComponent<QuestButtonInfo>()?.Click();
                 hit.transform.gameObject.GetComponent<BuyButton>()?.Click();
-
+                hit.transform.gameObject.GetComponent<TravelButton>()?.Click();
             }
 
             hitPrev = hit;

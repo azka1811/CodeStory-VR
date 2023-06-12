@@ -2,7 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
+using Unity.XR.CoreUtils;
+using UnityEngine.InputSystem;
 // using UnityEngine.InputSystem;
 public class DragDrop : MonoBehaviour
 {
@@ -31,18 +34,29 @@ public class DragDrop : MonoBehaviour
 
     private RaycastHit hit;
 
-    private Transform orgParent1;
+    public Transform orgParent1;
 
-    private Transform orgParent2;
+    public Transform orgParent2;
 
     [SerializeField]
     [Min(1)]
     float moveSpeed = 100f;
 
+    public XRNode inputSource;
 
-    // private void Start()
-    // {
-    // }
+    private Vector2 inputAxis;
+    bool buttonClicked;
+
+    OculusControls controls;
+    
+    void Start()
+    {
+        inHandItem = null;
+        GameObject oculusControls = GameObject.Find("OculusControlManager");
+        controls = oculusControls.GetComponent<OculusControls>();
+    }
+
+
     private void Drop()
     {
         inHandItemRB.useGravity = true;
@@ -121,43 +135,53 @@ public class DragDrop : MonoBehaviour
 
     private void Update()
     {
-       // Debug
-         //   .DrawRay(playerCameraTransform.position,
-         //   playerCameraTransform.forward * hitRange,
-          //  Color.red);
-
+        float click = controls.gripClick;
+        if (click == 1) { 
+            if(inHandItem != null)
+            {
+                Drop();
+            }
+        }
+        if (buttonClicked) { Debug.Log(buttonClicked); }
+        Debug
+          .DrawRay(playerCameraTransform.position,
+          playerCameraTransform.forward * hitRange,
+         Color.red);
 
         if (hit.collider != null)
         {
             hit.collider.GetComponent<Highlight>()?.ToggleHighlight(false);
-
-            // pickUpUI.SetActive(false);
-            // Debug.Log("CAN SEE");
         }
+
         if (inHandItem == null)
         {
-            if (
-                Physics
-                    .Raycast(playerCameraTransform.position,
-                    playerCameraTransform.forward,
-                    out hit,
-                    hitRange,
-                    pickableLayerMask)
-            )
+            if (Physics
+               .Raycast(playerCameraTransform.position,
+               playerCameraTransform.forward,
+               out hit,
+               hitRange,
+               pickableLayerMask))
             {
-                hit.collider.GetComponent<Highlight>()?.ToggleHighlight(true);
-                if (Input.GetKeyDown(KeyCode.E))
+                print("I SEE");
+                hit.collider?.GetComponent<Highlight>()?.ToggleHighlight(true);
+
+                if (click == 1)
                 {
-                 
-                    //Debug.Log("E");
-                    PickUp(hit.transform.gameObject);
+
+
+                    //if (Input.GetKeyDown(KeyCode.E) || buttonClicked)
+                    Debug.Log("click " + click);
+                    Debug.Log("try pick");
+                    PickUp(hit.transform?.gameObject);
+
+                    // pickUpUI.SetActive(true);
                 }
-                // pickUpUI.SetActive(true);
             }
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            //if (Input.GetKeyDown("E") || buttonClicked)
+            if (click > 0.5)
             {
                 Drop();
             }

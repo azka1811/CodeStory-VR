@@ -6,6 +6,8 @@ using TMPro;
 public class QuestBuilder : MonoBehaviour
 {
     string path;
+    string path2;
+    string path3;
     string jsonString;
     QuestJSON currentJson;
 
@@ -22,7 +24,24 @@ public class QuestBuilder : MonoBehaviour
         prefabs = GetComponent<PrefabContainer>();
 
         path = Application.dataPath + "/sample.json";
-        currentJson = readJSON(path);
+        path2 = Application.dataPath + "/sample1.json";
+        path3 = Application.dataPath + "/sample2.json";
+        int load = Random.Range(0, 3);
+        if (load == 0)
+        {
+            currentJson = readJSON(path);
+
+        }
+        else if (load == 1)
+        {
+
+            currentJson = readJSON(path2);
+        }
+        else if (load == 2)
+        {
+
+            currentJson = readJSON(path3);
+        }
         print(currentJson.arithematic_operators);
     }
     // Update is called once per frame
@@ -32,6 +51,7 @@ public class QuestBuilder : MonoBehaviour
         {
             makeOne = true;
             time = 0;
+
         }
         else
         {
@@ -222,6 +242,22 @@ public class QuestBuilder : MonoBehaviour
             setPosition(op);
         }
         plaQuest.Freeze();
+        int load = Random.Range(0, 3);
+        if (load == 0)
+        {
+            currentJson = readJSON(path);
+
+        }
+        else if (load == 1)
+        {
+
+            currentJson = readJSON(path2);
+        }
+        else if (load == 2)
+        {
+
+            currentJson = readJSON(path3);
+        }
     }
     public string getTimeFormatted(float time)
     {
@@ -247,6 +283,8 @@ public class QuestBuilder : MonoBehaviour
         }
         return minsStr + ":" + secsStr;
     }
+
+  
 }
 
 [System.Serializable]

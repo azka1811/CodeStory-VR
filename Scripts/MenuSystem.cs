@@ -1,31 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Player : MonoBehaviour
+using UnityEngine.SceneManagement;
+public class MenuSystem : MonoBehaviour
 {
-    [SerializeField]
-    private int ownedMoney = 0;
-    public int playedNarrative = 0;
-    
-
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
     }
 
-    public int GetMoney()
+    public void PlayGame()
     {
-        return ownedMoney;
-    }
+        SceneManager.LoadScene("csvr_loading");
+    } public void GameOptions()
+    {
 
-    public void SetMoney(int x)
+    } public void QuitGame()
     {
-        ownedMoney = x;
+        Application.Quit();
     }
 }
