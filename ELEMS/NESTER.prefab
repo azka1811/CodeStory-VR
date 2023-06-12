@@ -883,7 +883,7 @@ MonoBehaviour:
   hitRange: 1
   mask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 8
   direction: -1
   io: in1
   attached: {fileID: 0}
@@ -1011,7 +1011,7 @@ MonoBehaviour:
   hitRange: 1
   mask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 8
   direction: 1
   io: pass2
   attached: {fileID: 0}
@@ -1145,7 +1145,7 @@ MonoBehaviour:
   hitRange: 1
   mask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 8
   direction: 1
   io: pass1
   attached: {fileID: 0}
@@ -1273,7 +1273,7 @@ MonoBehaviour:
   hitRange: 1
   mask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 8
   direction: 1
   io: out
   attached: {fileID: 0}
@@ -1395,7 +1395,7 @@ MonoBehaviour:
   hitRange: 1
   mask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 8
   direction: -1
   io: in2
   attached: {fileID: 0}
